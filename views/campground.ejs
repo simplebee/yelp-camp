@@ -2,6 +2,10 @@
 
 <h1>Campgrounds</h1>
 
+<a href="/">Home</a>
+<a href="/campground">Campgrounds</a>
+<a href="/campground/new">Add new campground</a>
+
 <% campground.forEach(function(site) { %>
   <p><%= site.name %></p>
   <img src="<%= site.image %>" alt="<%= site.name %>">
