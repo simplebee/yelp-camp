@@ -2,3 +2,8 @@
   display: flex;
   flex-wrap: wrap; 
 }
+
+.add-form {
+  width: 30%;
+  margin: 30px auto;
+}
