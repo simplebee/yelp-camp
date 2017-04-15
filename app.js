@@ -3,10 +3,18 @@ var app = express();
 var bodyParser = require('body-parser');
 
 var campground = [
-  {name: 'Lake Arvid', image: 'https://images.pexels.com/photos/188940/pexels-photo-188940.jpeg?h=350&auto=compress&cs=tinysrgb'},
-  {name: 'Welchstad', image: 'https://images.pexels.com/photos/198979/pexels-photo-198979.jpeg?h=350&auto=compress&cs=tinysrgb'},
-  {name: 'Fidelport', image: 'https://images.pexels.com/photos/192518/pexels-photo-192518.jpeg?h=350&auto=compress&cs=tinysrgb'},
-  {name: 'East Stefanie', image: 'https://images.pexels.com/photos/48638/pexels-photo-48638.jpeg?h=350&auto=compress&cs=tinysrgb'}
+  {name: 'Lake Arvid', image: 'https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg'},
+  {name: 'Welchstad', image: 'https://farm2.staticflickr.com/1281/4684194306_18ebcdb01c.jpg'},
+  {name: 'Fidelport', image: 'https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg'},
+  {name: 'East Stefanie', image: 'https://farm4.staticflickr.com/3273/2602356334_20fbb23543.jpg'},
+  {name: 'Lake Arvid', image: 'https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg'},
+  {name: 'Welchstad', image: 'https://farm2.staticflickr.com/1281/4684194306_18ebcdb01c.jpg'},
+  {name: 'Fidelport', image: 'https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg'},
+  {name: 'East Stefanie', image: 'https://farm4.staticflickr.com/3273/2602356334_20fbb23543.jpg'},
+  {name: 'Lake Arvid', image: 'https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg'},
+  {name: 'Welchstad', image: 'https://farm2.staticflickr.com/1281/4684194306_18ebcdb01c.jpg'},
+  {name: 'Fidelport', image: 'https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg'},
+  {name: 'East Stefanie', image: 'https://farm4.staticflickr.com/3273/2602356334_20fbb23543.jpg'}
 ];
 
 app.set('view engine', 'ejs');
