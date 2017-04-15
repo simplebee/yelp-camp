@@ -2,7 +2,7 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 
-var campground = [
+var campgroundData = [
   {name: 'Lake Arvid', image: 'https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg'},
   {name: 'Welchstad', image: 'https://farm2.staticflickr.com/1281/4684194306_18ebcdb01c.jpg'},
   {name: 'Fidelport', image: 'https://farm2.staticflickr.com/1363/1342367857_2fd12531e7.jpg'},
@@ -26,13 +26,14 @@ app.get('/', function(req, res) {
 });
 
 app.get('/campground', function(req, res) {
-  res.render('campground', {campground: campground});
+  res.render('campground', {campgroundData: campgroundData});
 });
 
 app.post('/campground', function(req, res) {
   var name = req.body.name;
   var image = req.body.image;
-  campground.push({name: name, image: image});
+  var newCampground = {name: name, image: image};
+  campgroundData.push(newCampground);
   res.redirect('campground');
 });
 
