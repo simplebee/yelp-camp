@@ -1,6 +1,7 @@
-var express = require('express');
-var app = express();
-var bodyParser = require('body-parser');
+var express     = require('express'),
+    app         = express(),
+    bodyParser  = require('body-parser'),
+    mongoose    = require('mongoose');
 
 var campgroundData = [
   {name: 'Lake Arvid', image: 'https://farm4.staticflickr.com/3872/14435096036_39db8f04bc.jpg'},
@@ -20,6 +21,15 @@ var campgroundData = [
 app.set('view engine', 'ejs');
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
+
+mongoose.connect('mongodb://localhost/yelp-camp');
+
+var campgroundSchema = mongoose.Schema({
+  name: String,
+  image: String
+});
+
+var Campground = mongoose.model('Campground', campgroundSchema);
 
 app.get('/', function(req, res) {
   res.render('landing');
