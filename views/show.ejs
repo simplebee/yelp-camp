@@ -1,1 +1,7 @@
-<h1>Show</h1>
+<% include partials/header %>
+
+<h1><%= campgroundData.name %></h1>
+<img src="<%= campgroundData.image %>" alt="<%= campgroundData.name %>">
+<p><%= campgroundData.description %></p>
+
+<% include partials/footer %>
