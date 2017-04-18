@@ -52,7 +52,7 @@ app.post('/campground', function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.redirect('index');
+      res.redirect('/campground');
     }
   });
 });
