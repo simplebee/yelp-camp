@@ -28,7 +28,7 @@ app.get('/campground', function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.render('campground', {campgroundData: campgroundData});
+      res.render('index', {campgroundData: campgroundData});
     }
   });
 });
@@ -47,9 +47,14 @@ app.post('/campground', function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      res.redirect('campground');
+      res.redirect('index');
     }
   });
+});
+
+// Show
+app.get('/campground/:id', function(req, res) {
+  res.render('show');
 });
 
 app.listen(3000);
