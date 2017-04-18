@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({extended: true}));
 // Mongoose schema and models
 mongoose.connect('mongodb://localhost/yelp-camp');
 
-var campgroundSchema = mongoose.Schema({
+var campgroundSchema = new mongoose.Schema({
   name: String,
   image: String,
   description: String
