@@ -8,6 +8,7 @@
   <p><%= comment.author %> - <%= comment.text %></p>
 <% }); %>
 
-<a href="/campground">Back to Campground</a>
+<a class="btn btn-primary" href="/campground/<%= campgroundData._id %>/comment/new">Add New Comment</a>
+<a class="btn btn-primary" href="/campground">Back to Campgrounds</a>
 
 <% include ../partials/footer %>

@@ -18,6 +18,7 @@ app.get('/', function(req, res) {
   res.render('landing');
 });
 
+// Campground
 // Index
 app.get('/campground', function(req, res) {
   Campground.find(function(err, campgroundData) {
@@ -57,6 +58,33 @@ app.get('/campground/:id', function(req, res) {
       if (err) return console.error(err);
       res.render('campground/show', {campgroundData: campgroundData});
     });
+});
+
+// Comment
+// New
+app.get('/campground/:id/comment/new', function(req, res) {
+  var id = req.params.id;
+  Campground.findById(id, function(err, campgroundData) {
+    if (err) return console.error(err);
+    res.render('comment/new', {campgroundData: campgroundData});
+  });
+});
+
+// Create
+app.post('/campground/:id/comment', function(req, res) {
+  var id = req.params.id;
+  var comment = req.body.comment;
+  Campground.findById(id, function(err, campgroundData) {
+    if (err) return console.error(err);
+    Comment.create(comment, function(err, commentData) {
+      if (err) return console.error(err);
+      campgroundData.comment.push(commentData);
+      campgroundData.save(function (err) {
+        if (err) return console.error(err);
+        res.redirect('/campground/' + id);        
+      });
+    });
+  });
 });
 
 app.listen(3000);
