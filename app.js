@@ -22,13 +22,13 @@ app.get('/', function(req, res) {
 app.get('/campground', function(req, res) {
   Campground.find(function(err, campgroundData) {
     if (err) return console.error(err);
-    res.render('index', {campgroundData: campgroundData});
+    res.render('campground/index', {campgroundData: campgroundData});
   });
 });
 
 // New
 app.get('/campground/new', function(req, res) {
-  res.render('new');
+  res.render('campground/new');
 });
 
 // Create
@@ -55,7 +55,7 @@ app.get('/campground/:id', function(req, res) {
     .populate('comment')
     .exec(function(err, campgroundData) {
       if (err) return console.error(err);
-      res.render('show', {campgroundData: campgroundData});
+      res.render('campground/show', {campgroundData: campgroundData});
     });
 });
 
