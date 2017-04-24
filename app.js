@@ -2,7 +2,8 @@ var express     = require('express'),
     app         = express(),
     bodyParser  = require('body-parser'),
     mongoose    = require('mongoose'),
-    Campground  = require('./models/campground');
+    Campground  = require('./models/campground'),
+    Comment     = require('./models/comment');
 
 // Express config
 app.set('view engine', 'ejs');
@@ -49,10 +50,13 @@ app.post('/campground', function(req, res) {
 // Show
 app.get('/campground/:id', function(req, res) {
   var id = req.params.id;
-  Campground.findById(id, function(err, campgroundData) {
-    if (err) return console.error(err);
-    res.render('show', {campgroundData: campgroundData});
-  });
+  Campground
+    .findById(id)
+    .populate('comment')
+    .exec(function(err, campgroundData) {
+      if (err) return console.error(err);
+      res.render('show', {campgroundData: campgroundData});
+    });
 });
 
 app.listen(3000);
