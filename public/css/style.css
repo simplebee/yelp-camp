@@ -7,3 +7,15 @@
   width: 30%;
   margin: 30px auto;
 }
+
+.thumbnail {
+  padding: 0;
+}
+
+.thumbnail .img-responsive {
+  width: 100%;
+}
+
+.thumbnail .caption {
+  padding: 19px
+}
