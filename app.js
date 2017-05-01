@@ -13,11 +13,6 @@ var express       = require('express'),
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.urlencoded({extended: true}));
-
-// Mongoose config
-mongoose.connect('mongodb://localhost/yelp-camp');
-
-// Passport config
 app.use(session({
   secret: 'I love lamp',
   resave: false,
@@ -25,7 +20,15 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(function(req, res, next) {
+  res.locals.user = req.user;
+  next();
+});
 
+// Mongoose config
+mongoose.connect('mongodb://localhost/yelp-camp');
+
+// Passport config
 passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
@@ -38,6 +41,7 @@ app.get('/', function(req, res) {
 // Campground
 // Index
 app.get('/campground', function(req, res) {
+  console.log(res.locals);
   Campground.find(function(err, campgroundData) {
     if (err) return console.error(err);
     res.render('campground/index', {campgroundData: campgroundData});
