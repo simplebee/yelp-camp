@@ -1,10 +1,13 @@
-var express     = require('express'),
-    app         = express(),
-    bodyParser  = require('body-parser'),
-    mongoose    = require('mongoose'),
-    Campground  = require('./models/campground'),
-    Comment     = require('./models/comment'),
-    User        = require('./models/user');
+var express       = require('express'),
+    app           = express(),
+    bodyParser    = require('body-parser'),
+    mongoose      = require('mongoose'),
+    passport      = require('passport'),
+    LocalStrategy = require('passport-local'),
+    session       = require('express-session'),
+    Campground    = require('./models/campground'),
+    Comment       = require('./models/comment'),
+    User          = require('./models/user');
 
 // Express config
 app.set('view engine', 'ejs');
@@ -13,6 +16,19 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 // Mongoose config
 mongoose.connect('mongodb://localhost/yelp-camp');
+
+// Passport config
+app.use(session({
+  secret: 'I love lamp',
+  resave: false,
+  saveUninitialized: false
+}));
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
 // Landing
 app.get('/', function(req, res) {
@@ -84,6 +100,23 @@ app.post('/campground/:id/comment', function(req, res) {
         if (err) return console.error(err);
         res.redirect('/campground/' + id);        
       });
+    });
+  });
+});
+
+// Register
+app.get('/register', function(req, res) {
+  res.render('register');
+});
+
+app.post('/register', function(req, res) {
+  var newUser = new User({username: req.body.username});
+  var password = req.body.password;
+  User.register(newUser, password, function(err, user) {
+    if (err) return res.redirect('/register');
+    passport.authenticate('local')(req, res, function(err) {
+      if (err) return res.redirect('/register');
+      res.redirect('/');
     });
   });
 });
