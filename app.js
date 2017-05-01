@@ -79,7 +79,7 @@ app.get('/campground/:id', function(req, res) {
 
 // Comment
 // New
-app.get('/campground/:id/comment/new', function(req, res) {
+app.get('/campground/:id/comment/new',isLoggedIn, function(req, res) {
   var id = req.params.id;
   Campground.findById(id, function(err, campgroundData) {
     if (err) return console.error(err);
@@ -88,7 +88,7 @@ app.get('/campground/:id/comment/new', function(req, res) {
 });
 
 // Create
-app.post('/campground/:id/comment', function(req, res) {
+app.post('/campground/:id/comment', isLoggedIn, function(req, res) {
   var id = req.params.id;
   var comment = req.body.comment;
   Campground.findById(id, function(err, campgroundData) {
@@ -136,5 +136,13 @@ app.get('/logout', function(req, res) {
   req.logout();
   res.redirect('/');
 });
+
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated()) {
+    next();
+  } else {
+    res.redirect('/login');
+  }
+}
 
 app.listen(3000);
