@@ -17,6 +17,7 @@
           <h3 class="pull-right">£10.00/night</h3>
           <h3><a href="#"><%= campgroundData.name %></a></h3>
           <p><%= campgroundData.description %></p>
+          <p><em>Added by <%= campgroundData.author.username %></em></p>
         </div>
       </div>
       <div class="well">
@@ -26,7 +27,7 @@
         <hr>
         <% campgroundData.comment.forEach(function(comment) { %>
           <span class="pull-right"><em>12/02/17</em></span>
-          <div><strong><%= comment.author %></strong></div>
+          <div><strong><%= comment.author.username %></strong></div>
           <p><%= comment.text %></p>
         <% }); %>
       </div>
