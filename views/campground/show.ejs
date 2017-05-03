@@ -26,7 +26,7 @@
         <hr>
         <% campgroundData.comment.forEach(function(comment) { %>
           <span class="pull-right"><em>12/02/17</em></span>
-          <div><strong><%= comment.author %></strong></div>
+          <div><strong><%= comment.author.username %></strong></div>
           <p><%= comment.text %></p>
         <% }); %>
       </div>

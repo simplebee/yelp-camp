@@ -15,10 +15,13 @@ router.get('/new',isLoggedIn, function(req, res) {
 // Create
 router.post('/', isLoggedIn, function(req, res) {
   var id = req.params.id;
-  var comment = req.body.comment;
+  var newComment = {
+    text: req.body.comment.text,
+    author: req.user
+  };
   Campground.findById(id, function(err, campgroundData) {
     if (err) return console.error(err);
-    Comment.create(comment, function(err, commentData) {
+    Comment.create(newComment, function(err, commentData) {
       if (err) return console.error(err);
       campgroundData.comment.push(commentData);
       campgroundData.save(function (err) {

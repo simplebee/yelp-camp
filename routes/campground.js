@@ -4,7 +4,6 @@ var Campground  = require('../models/campground');
 
 // Index
 router.get('/', function(req, res) {
-  console.log(res.locals);
   Campground.find(function(err, campgroundData) {
     if (err) return console.error(err);
     res.render('campground/index', {campgroundData: campgroundData});
