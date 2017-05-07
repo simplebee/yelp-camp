@@ -17,5 +17,9 @@
 }
 
 .thumbnail .caption {
-  padding: 19px
+  padding: 19px;
+}
+
+.button__delete {
+  display: inline;
 }

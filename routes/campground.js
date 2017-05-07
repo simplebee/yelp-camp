@@ -1,6 +1,7 @@
 var express     = require('express');
 var router      = express.Router();
 var Campground  = require('../models/campground');
+var Comment  = require('../models/comment');
 
 // Index
 router.get('/', function(req, res) {
@@ -53,6 +54,21 @@ router.put('/:id', function(req, res) {
   Campground.findByIdAndUpdate(id , updateCampground, function(err) {
     if (err) return console.error(err);
     res.redirect('/campground/' + id);
+  });
+});
+
+// Destroy
+router.delete('/:id', function(req, res) {
+  var id = req.params.id;
+  Campground.findById(id, function(err, campgroundData) {
+    if (err) return console.error(err);
+    Comment.remove({_id: {$in: campgroundData.comment}}, function(err) {
+      if (err) return console.error(err);
+      campgroundData.remove(function(err) {
+        if (err) return console.error(err);
+        res.redirect('/campground');
+      });
+    });
   });
 });
 
