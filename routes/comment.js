@@ -4,7 +4,7 @@ var Campground  = require('../models/campground');
 var Comment     = require('../models/comment');
 
 // New
-router.get('/new',isLoggedIn, function(req, res) {
+router.get('/new', checkLoggedIn, function(req, res) {
   var id = req.params.id;
   Campground.findById(id, function(err, campgroundData) {
     if (err) return console.error(err);
@@ -13,7 +13,7 @@ router.get('/new',isLoggedIn, function(req, res) {
 });
 
 // Create
-router.post('/', isLoggedIn, function(req, res) {
+router.post('/', checkLoggedIn, function(req, res) {
   var id = req.params.id;
   var newComment = {
     text: req.body.comment.text,
@@ -32,7 +32,7 @@ router.post('/', isLoggedIn, function(req, res) {
   });
 });
 
-function isLoggedIn(req, res, next) {
+function checkLoggedIn(req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
