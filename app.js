@@ -1,11 +1,12 @@
-var express       = require('express');
-var app           = express();
-var bodyParser    = require('body-parser');
-var mongoose      = require('mongoose');
-var passport      = require('passport');
-var LocalStrategy = require('passport-local');
-var session       = require('express-session');
-var User          = require('./models/user');
+var express         = require('express');
+var app             = express();
+var bodyParser      = require('body-parser');
+var mongoose        = require('mongoose');
+var passport        = require('passport');
+var LocalStrategy   = require('passport-local');
+var session         = require('express-session');
+var methodOverride  = require('method-override');
+var User            = require('./models/user');
 
 var campgroundRoute = require('./routes/campground');
 var commentRoute    = require('./routes/comment');
@@ -22,6 +23,7 @@ app.use(session({
 }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(methodOverride('_method'));
 app.use(function(req, res, next) {
   res.locals.user = req.user;
   next();
