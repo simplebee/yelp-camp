@@ -1,7 +1,8 @@
 var express     = require('express');
 var router      = express.Router();
 var Campground  = require('../models/campground');
-var Comment  = require('../models/comment');
+var Comment     = require('../models/comment');
+var middleware  = require('../middleware');
 
 // Index
 router.get('/', function(req, res) {
@@ -12,12 +13,12 @@ router.get('/', function(req, res) {
 });
 
 // New
-router.get('/new', checkLoggedIn, function(req, res) {
+router.get('/new', middleware.checkLoggedIn, function(req, res) {
   res.render('campground/new');
 });
 
 // Create
-router.post('/', checkLoggedIn, function(req, res) {
+router.post('/', middleware.checkLoggedIn, function(req, res) {
   var newCampground = req.body.campground;
   newCampground.author = req.user;
   Campground.create(newCampground, function(err) {
@@ -39,7 +40,7 @@ router.get('/:id', function(req, res) {
 });
 
 // Edit
-router.get('/:id/edit', checkLoggedIn, checkAuthor, function(req, res) {
+router.get('/:id/edit', middleware.checkLoggedIn, middleware.checkCampgroundAuthor, function(req, res) {
   var id = req.params.id;
   Campground.findById(id, function(err, campgroundData) {
     if (err) return console.error(err);
@@ -48,7 +49,7 @@ router.get('/:id/edit', checkLoggedIn, checkAuthor, function(req, res) {
 });
 
 // Update
-router.put('/:id', checkLoggedIn, checkAuthor, function(req, res) {
+router.put('/:id', middleware.checkLoggedIn, middleware.checkCampgroundAuthor, function(req, res) {
   var id = req.params.id;
   var updateCampground = req.body.campground;
   Campground.findByIdAndUpdate(id , updateCampground, function(err) {
@@ -58,7 +59,7 @@ router.put('/:id', checkLoggedIn, checkAuthor, function(req, res) {
 });
 
 // Destroy
-router.delete('/:id', checkLoggedIn, checkAuthor, function(req, res) {
+router.delete('/:id', middleware.checkLoggedIn, middleware.checkCampgroundAuthor, function(req, res) {
   var id = req.params.id;
   Campground.findById(id, function(err, campgroundData) {
     if (err) return console.error(err);
@@ -71,25 +72,5 @@ router.delete('/:id', checkLoggedIn, checkAuthor, function(req, res) {
     });
   });
 });
-
-function checkLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect('/login');
-  }
-}
-
-function checkAuthor(req, res, next) {
-  var id = req.params.id; 
-  Campground.findById(id, function(err, campgroundData) {
-    if (err) return console.error(err);
-    if (campgroundData.author._id.equals(req.user._id)) {
-      next();
-    } else {
-      res.redirect('back');
-    }
-  });
-}
 
 module.exports = router;
