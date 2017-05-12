@@ -32,9 +32,16 @@
         </div>
         <hr>
         <% campgroundData.comment.forEach(function(comment) { %>
-          <span class="pull-right"><em>12/02/17</em></span>
-          <div><strong><%= comment.author.username %></strong></div>
+          <p><strong><%= comment.author.username %></strong></p>
+          <p><em>12/02/17</em></p>
           <p><%= comment.text %></p>
+          <% if (user && comment.author._id.equals(user._id)) { %>
+            <a class="btn btn-xs btn-warning" href="/campground/<%= campgroundData._id %>/comment/<%= comment._id %>/edit">Edit</a>
+            <form class="button__delete" action="/campground/<%= campgroundData._id %>/comment/<%= comment._id %>?_method=DELETE" method="POST">
+              <button class="btn btn-xs btn-danger">Delete</button>
+            </form>
+          <% } %>          
+          <hr>
         <% }); %>
       </div>
     </div>
