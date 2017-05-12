@@ -16,10 +16,14 @@ router.get('/register', function(req, res) {
 router.post('/register', function(req, res) {
   var newUser = new User({username: req.body.username});
   var password = req.body.password;
-  User.register(newUser, password, function(err, user) {
-    if (err) return res.redirect('/register');
+  User.register(newUser, password, function(err) {
+    if (err) {
+      req.flash('error', err.message);
+      return res.redirect('/register');
+    }
     passport.authenticate('local')(req, res, function(err) {
-      if (err) return res.redirect('/register');
+      if (err) console.error(err);
+      req.flash('success', 'Welcome to Yelp Camp');
       res.redirect('/');
     });
   });
