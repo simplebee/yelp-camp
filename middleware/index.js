@@ -5,6 +5,7 @@ exports.checkLoggedIn = function (req, res, next) {
   if (req.isAuthenticated()) {
     next();
   } else {
+    req.flash('error', 'Please, log in');
     res.redirect('/login');
   }
 };
@@ -15,6 +16,7 @@ exports.checkCampgroundAuthor = function (req, res, next) {
     if (campgroundData.author._id.equals(req.user._id)) {
       next();
     } else {
+      req.flash('error', 'You don\'t have permission');
       res.redirect('back');
     }
   });
@@ -26,6 +28,7 @@ exports.checkCommentAuthor = function (req, res, next) {
     if (commentData.author._id.equals(req.user._id)) {
       next();
     } else {
+      req.flash('error', 'You don\'t have permission');
       res.redirect('back');
     }
   });
