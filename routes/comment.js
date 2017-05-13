@@ -60,7 +60,8 @@ router.delete('/:comment_id', middleware.checkLoggedIn, middleware.checkCommentA
     if (err) return console.error(err);
     Campground.findByIdAndUpdate(campgroundID, {$pull: {comment: commentID}}, function(err) {
       if (err) return console.error(err);
-      res.redirect('back');
+      req.flash('success', 'Comment successfully deleted');
+      res.redirect('/campground/' + campgroundID);
     });
   });
 });

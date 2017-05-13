@@ -67,6 +67,7 @@ router.delete('/:id', middleware.checkLoggedIn, middleware.checkCampgroundAuthor
       if (err) return console.error(err);
       campgroundData.remove(function(err) {
         if (err) return console.error(err);
+        req.flash('success', 'Campground successfully deleted');
         res.redirect('/campground');
       });
     });
