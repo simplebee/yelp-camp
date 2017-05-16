@@ -36,7 +36,8 @@ app.use(function(req, res, next) {
 });
 
 // Mongoose config
-mongoose.connect('mongodb://localhost/yelp-camp');
+var databaseUrl = process.env.DB_URL || 'mongodb://localhost/yelp-camp';
+mongoose.connect(databaseUrl);
 
 // Passport config
 passport.use(new LocalStrategy(User.authenticate()));
@@ -48,4 +49,5 @@ app.use('/', indexRoute);
 app.use('/campground', campgroundRoute);
 app.use('/campground/:id/comment', commentRoute);
 
-app.listen(3000);
+var port = process.env.PORT || 3000;
+app.listen(port);
