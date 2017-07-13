@@ -36,8 +36,18 @@ app.use(function(req, res, next) {
 });
 
 // Mongoose config
-var databaseUrl = process.env.DB_URL || 'mongodb://localhost/yelp-camp';
-mongoose.connect(databaseUrl);
+function getDatabaseUrl() {
+  if (process.env.NODE_ENV === 'production') {
+    return process.env.DB_PROD;
+  }
+  if (process.env.NODE_ENV === 'development') {
+    return process.env.DB_DEV;
+  } else {
+    return 'mongodb://localhost/yelp-camp';
+  }
+}
+
+mongoose.connect(getDatabaseUrl());
 
 // Passport config
 passport.use(new LocalStrategy(User.authenticate()));
